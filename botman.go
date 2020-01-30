@@ -21,7 +21,7 @@ func fetchBags(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Fetching Bags")
 	bags := []Bag{
 		Bag{Title: "Jansport", Desc: "eLITE women", Price: 32.3},
-		Bag{Title: "Applyboard", Desc: "eLITE man", Price: 12.3},
+		Bag{Title: "Swiss Gear", Desc: "eLITE man", Price: 12.3},
 	}
 	json.NewEncoder(w).Encode(bags)
 }
