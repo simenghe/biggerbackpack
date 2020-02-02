@@ -21,8 +21,7 @@ func FetchTestBags(w http.ResponseWriter, r *http.Request) {
 
 // FetchBags returns the bag data from the query
 func FetchBags(w http.ResponseWriter, r *http.Request) {
-	var bags []core.Bag
-	bags = core.GetBagData()
+	bags := core.GetBagData()
 	fmt.Println(bags)
 	json.NewEncoder(w).Encode(bags)
 }

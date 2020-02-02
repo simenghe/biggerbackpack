@@ -17,10 +17,10 @@ type Bag2 struct {
 
 // Bag main bag
 type Bag struct {
-	id       int     `json:"id"`
-	bagName  string  `json:"bag_name"`
-	bagDesc  string  `json:"bag_desc"`
-	bagPrice float64 `json:"bag_price"`
+	ID       int     `json:"ID"`
+	BagName  string  `json:"bag_name"`
+	BagDesc  string  `json:"bag_desc"`
+	BagPrice float64 `json:"bag_price"`
 }
 
 // GetBagData grabs bags from MySQL database
@@ -45,7 +45,7 @@ func GetBagData() []Bag {
 	bags := []Bag{}
 	for results.Next() {
 		var bagee Bag
-		err = results.Scan(&bagee.id, &bagee.bagName, &bagee.bagPrice, &bagee.bagDesc)
+		err = results.Scan(&bagee.ID, &bagee.BagName, &bagee.BagPrice, &bagee.BagDesc)
 		if err != nil {
 			panic(err.Error())
 		}
