@@ -1,17 +1,24 @@
 package routes
-import(
+
+import (
+	bagController "Backpack/controllers"
 	"fmt"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	bagController "Backpack/controllers"
+
+	"github.com/gorilla/mux"
 )
+
 // HandleReq handles our main route
 func HandleReq() {
 	fmt.Println("Handling the requests!")
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/", bagController.FetchTestBags)
-	myRouter.HandleFunc("/health",bagController.Health)
-	myRouter.HandleFunc("/getbags",bagController.FetchBags)
+	myRouter.HandleFunc("/health", bagController.Health)
+	myRouter.HandleFunc("/getbags", bagController.FetchBags)
+
+	// Scraper test route, cannot rely on this for data.
+	myRouter.HandleFunc("/amazon/{item}", bagController.AmazonSearch)
+	myRouter.HandleFunc("/costco/{item}", bagController.CostcoSearch)
 	log.Fatal(http.ListenAndServe(":5000", myRouter))
 }

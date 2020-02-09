@@ -1,7 +1,7 @@
-package main
+package scraper
 
 import (
-	"Backpack/utils"
+	// "Backpack/utils"
 	"fmt"
 	"strconv"
 
@@ -24,11 +24,16 @@ func ScrapeAmazon(itemType string) []Item {
 	var childQuery = "span.a-size-base-plus.a-color-base.a-text-normal"
 	var ratingQuery = "span.a-icon-alt"
 	var priceQuery = "span.a-price > span.a-offscreen"
+
+	// main cane
 	c := colly.NewCollector()
+	var header = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36"
 	colly.Async(true)
 	fmt.Println(url)
 	c.OnRequest(func(r *colly.Request) {
 		fmt.Println("Visiting", r.URL)
+		r.Headers.Set("User-Agent", header)
+
 	})
 	var itemList []Item
 	c.OnHTML(outerQuery, func(e *colly.HTMLElement) {
@@ -44,7 +49,7 @@ func ScrapeAmazon(itemType string) []Item {
 			if err != nil {
 			}
 			price = e.ChildText(priceQuery)
-			utils.FormatStars(&stars)
+			// utils.FormatStars(&stars)
 			itemList = append(itemList, Item{Name: productName, Desc: "", Price: price, Rating: rating})
 			// Create the item to be pushed onto the list.
 
@@ -53,8 +58,24 @@ func ScrapeAmazon(itemType string) []Item {
 		})
 	})
 	c.Visit(url)
+	fmt.Println(itemList)
 	return itemList
 }
-func main() {
-	fmt.Println(ScrapeAmazon("backpack"))
+
+// ScrapeCostco scrapes items from costco.com
+func ScrapeCostco(itemType string) {
+	url := fmt.Sprintf("https://www.costco.com/CatalogSearch?dept=All&keyword=%s/", itemType)
+	// main cane
+	c := colly.NewCollector()
+	colly.Async(true)
+	fmt.Println(url)
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Println("Visiting", r.URL)
+	})
+	
+	c.OnHTML("", func(e *colly.HTMLElement){
+		// e.Request.Visit(e.Attr("href"))
+		fmt.Println(e.Text)
+	})
+	c.Visit(url)
 }
