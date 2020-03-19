@@ -20,5 +20,8 @@ func HandleReq() {
 	// Scraper test route, cannot rely on this for data.
 	myRouter.HandleFunc("/amazon/{item}", bagController.AmazonSearch)
 	myRouter.HandleFunc("/costco/{item}", bagController.CostcoSearch)
+
+	// Hltv /csgo stuff
+	myRouter.HandleFunc("/csgoteams", bagController.CSGOteams)
 	log.Fatal(http.ListenAndServe(":5000", myRouter))
 }
