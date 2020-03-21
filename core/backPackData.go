@@ -32,12 +32,6 @@ func GetBagData() []Bag {
 	}
 	defer db.Close()
 
-	// insert, err := db.Query("INSERT INTO bags(bag_name, bag_price, bag_desc) VALUES('Balooga', 23.12, 'Raw Dogger Only')")
-	// if err != nil {
-	// 	panic(err.Error())
-	// }
-	// defer insert.Close()
-
 	results, err := db.Query("SELECT * FROM bags")
 	if err != nil {
 		panic(err.Error())
