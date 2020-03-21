@@ -11,6 +11,7 @@ services:
             - "3606:3606"
         volumes:
             - my-db:/var/lib/mysql
+            - ./dumps/init.sql:/docker-entrypoint-initdb.d/init.sql
     bigger-backpack:
         build: ./
         ports:
@@ -19,5 +20,4 @@ services:
             - ./:/app
 volumes:
     my-db:
-
 #https://askubuntu.com/questions/773446/unable-to-connect-via-mysql-workbench-to-localhost-in-ubuntu-16-04-passwordless
