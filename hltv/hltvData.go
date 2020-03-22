@@ -20,7 +20,11 @@ type CSGOteam struct {
 
 // GetTeamData grabs bags from MySQL database
 func GetTeamData() []CSGOteam {
+<<<<<<< HEAD
 	db, err := sql.Open("mysql", "docker:docker@tcp(127.0.0.1:3308)/backpack")
+=======
+	db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/backpack")
+>>>>>>> f3c608636a238229fa526724155ac4a3d9f83baf
 	if err != nil {
 		panic(err.Error())
 	}
