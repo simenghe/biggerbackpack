@@ -1,23 +1,26 @@
 version: "3.7"
 services:
-    bigger-db:
-        image: mysql:5.7
-        restart: always
-        command: --default-authentication-plugin=mysql_native_password
-        environment:
-            MYSQL_DATABASE: "db"
-            MYSQL_ROOT_PASSWORD: "password"
-        ports:
-            - "127.0.0.1:3606:3606"
-        volumes:
-            - my-db:/var/lib/mysql
-            - ./dumps/init.sql:/docker-entrypoint-initdb.d/init.sql
+    # bigger-db:
+    #     build:
+    #         context: ./dumps
+    #     environment:
+    #         MYSQL_ROOT_PASSWORD: root
+    #         MYSQL_DATABASE: backpack
+    #         MYSQL_USER: docker
+    #         MYSQL_PASSWORD: docker
+    #     container_name: backpack_db
+    #     ports:
+    #         - "3308:3306"
+    #     expose:
+    #         - 3306
+    #     tty: true
     bigger-backpack:
+        container_name: bigger-backpack
         build: ./
         ports:
             - "127.0.0.1:5000:5000"
+        # depends_on:
+        #     - bigger-db
         volumes:
             - ./:/app
-volumes:
-    my-db:
 #https://askubuntu.com/questions/773446/unable-to-connect-via-mysql-workbench-to-localhost-in-ubuntu-16-04-passwordless

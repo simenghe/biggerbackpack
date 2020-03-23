@@ -2,6 +2,7 @@ package controllers
 
 import (
 	// "Backpack/core"
+	"Backpack/scraper"
 	"Backpack/hltv"
 	"encoding/json"
 
@@ -13,8 +14,10 @@ import (
 // CSGOteams grabs the stored teams from the database.
 func CSGOteams(w http.ResponseWriter, r *http.Request) {
 	teams := hltv.GetTeamData()
+	scraper.ScrapeHltvTeams()
 	json.NewEncoder(w).Encode(teams)
 }
+
 
 // // FetchTestBags Returns the bags data to the mandems
 // func FetchTestBags(w http.ResponseWriter, r *http.Request) {

@@ -3,28 +3,15 @@ package hltv
 import (
 	"database/sql"
 	"fmt"
-
+	hltvScraper "Backpack/scraper"
 	// "encoding/json"
 	// MySql Database Driver
 	_ "github.com/go-sql-driver/mysql"
 )
 
-// CSGOteam main bag
-type CSGOteam struct {
-	ID       int     `json:"ID"`
-	TeamName string  `json:"team_name"`
-	Ranking  string  `json:"ranking"`
-	URL      string `json:"url"`
-	Date     string  `json:"date"`
-}
-
 // GetTeamData grabs bags from MySQL database
-func GetTeamData() []CSGOteam {
-<<<<<<< HEAD
-	db, err := sql.Open("mysql", "docker:docker@tcp(127.0.0.1:3308)/backpack")
-=======
-	db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/backpack")
->>>>>>> f3c608636a238229fa526724155ac4a3d9f83baf
+func GetTeamData() []hltvScraper.CSGOteam {
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3308)/backpack")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -33,9 +20,9 @@ func GetTeamData() []CSGOteam {
 	if err != nil {
 		panic(err.Error())
 	}
-	csgoTeams := []CSGOteam{}
+	csgoTeams := []hltvScraper.CSGOteam{}
 	for results.Next() {
-		var team CSGOteam
+		var team hltvScraper.CSGOteam
 		err = results.Scan(&team.ID, &team.TeamName, &team.Ranking, &team.URL, &team.Date)
 		if err != nil {
 			panic(err.Error())
