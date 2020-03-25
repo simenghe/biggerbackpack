@@ -2,29 +2,23 @@ package scraper
 
 import (
 	"fmt"
-	"strings"
-
+	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gocolly/colly"
-	// "regexp"
 )
 
 // CSGOteam holds the information for the csgo team
 type CSGOteam struct {
 	ID         int    `json:"ID"`
-	TeamName   string `json:"team_name"`
-	Points     string `json:"points"` // Points need to be int
+	TeamName   string `json:"teamName"`
+	Points     int    `json:"points"` // Points need to be int
 	Ranking    int    `json:"ranking"`
 	URL        string `json:"url"`
 	Date       string `json:"date"`
-	PlayerList string `json:"player_list"`
-	// Player1  string `json:"player_1"`
-	// Player2  string `json:"player_2"`
-	// Player3  string `json:"player_3"`
-	// Player4  string `json:"player_4"`
-	// Player5  string `json:"player_5"`
+	PlayerList string `json:"playerList"`
 }
 
 // ScrapeHltvTeams scrapes the top teams, needs automation currently.
@@ -33,7 +27,6 @@ func ScrapeHltvTeams() []CSGOteam {
 	c := colly.NewCollector()
 	var header = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1913.47 Safari/537.36"
 	colly.Async(true)
-	fmt.Println(url)
 	c.OnRequest(func(r *colly.Request) {
 		fmt.Println("Visiting", r.URL)
 		r.Headers.Set("User-Agent", header)
@@ -52,19 +45,23 @@ func ScrapeHltvTeams() []CSGOteam {
 			if err != nil {
 				ranking = 0
 			}
+			// Format the points
+			re := regexp.MustCompile("[0-9]+")
+			points, err := strconv.Atoi((re.FindAllString(e.ChildText("span.points"), 1)[0]))
+			if err != nil {
+				points = 0
+			}
 			var team = CSGOteam{
 				TeamName:   e.ChildText("span.name"),
 				Ranking:    ranking,
-				Points:     e.ChildText("span.points"),
+				Points:     points,
 				PlayerList: strings.Join(players, " "),
 				Date:       time.Now().Format(layoutISO),
 			}
-			// fmt.Println(players)
 			csgoteams = append(csgoteams, team)
 		})
 		// Hard assign the players
 	})
 	c.Visit(url)
-	fmt.Println(csgoteams)
 	return csgoteams
 }

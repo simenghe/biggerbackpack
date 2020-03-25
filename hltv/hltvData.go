@@ -11,7 +11,7 @@ import (
 
 // GetTeamData grabs bags from MySQL database
 func GetTeamData() []hltvScraper.CSGOteam {
-	// db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3308)/backpack")
+	// db, err := sql.Open("mysql", "root:root@tcp(localhost:3308)/backpack")
 	// if err != nil {
 	// 	panic(err.Error())
 	// }
