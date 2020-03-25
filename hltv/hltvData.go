@@ -31,6 +31,5 @@ func GetTeamData() []hltvScraper.CSGOteam {
 	// }
 	// fmt.Println("Successful connection to MySQL.")
 	csgoTeams := hltvScraper.ScrapeHltvTeams()
-	fmt.Println(csgoTeams)
 	return csgoTeams
 }
