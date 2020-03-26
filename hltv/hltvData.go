@@ -2,7 +2,7 @@ package hltv
 
 import (
 	hltvScraper "Backpack/scraper"
-	"fmt"
+	// "fmt"
 
 	// "encoding/json"
 	// MySql Database Driver
