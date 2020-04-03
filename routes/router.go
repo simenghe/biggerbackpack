@@ -25,6 +25,6 @@ func HandleReq() {
 	myRouter.HandleFunc("/csgoteams", bagController.CSGOteams)
 
 	// league storage
-	myRouter.HandleFunc("/addroster", bagController.LeagueRoster)
+	myRouter.HandleFunc("/addroster", bagController.LeagueRoster).Methods("POST")
 	log.Fatal(http.ListenAndServe(":5000", myRouter))
 }

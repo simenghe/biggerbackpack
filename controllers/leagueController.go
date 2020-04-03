@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"Backpack/core"
-	// "encoding/json"
+	"encoding/json"
 
 	// "fmt"
 	"net/http"
@@ -11,7 +11,9 @@ import (
 
 // LeagueRoster teams grabs the stored teams from the database.
 func LeagueRoster(w http.ResponseWriter, r *http.Request) {
-	core.CreateRoster()
+	var player core.Player
+	_ = json.NewDecoder(r.Body).Decode(&player)
+	core.CreateRoster(player)
 	// json.NewEncoder(w).Encode(teams)
 }
 
