@@ -1,8 +1,9 @@
 package core
 
 import (
-	"fmt"
 	"database/sql"
+	"fmt"
+
 	// "encoding/json"
 	// MySql Database Driver
 	_ "github.com/go-sql-driver/mysql"
@@ -15,17 +16,20 @@ func CreateRoster() {
 		panic(err.Error())
 	}
 	defer db.Close()
+
+	// perform an insert operation
+	insert, err := db.Query(`
+	INSERT INTO players
+	(roster_name,roster_id,player_name,player_role,created_date)
+  	VALUES
+	('SimpSquad', '123456', 'Bobby', 'ADC', now());
+	`)
 	if err != nil {
 		panic(err.Error())
 	}
-	// csgoTeams := []hltvScraper.CSGOteam{}
-	// for results.Next() {
-	// 	var team hltvScraper.CSGOteam
-	// 	err = results.Scan(&team.ID, &team.TeamName, &team.Ranking, &team.URL, &team.Date)
-	// 	if err != nil {
-	// 		panic(err.Error())
-	// 	}
-	// 	csgoTeams = append(csgoTeams, team)
-	// }
+	defer insert.Close()
+
 	fmt.Println("Successful connection to MySQL.")
 }
+
+// GetRoster() gets the roster with
